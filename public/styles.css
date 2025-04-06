@@ -9,18 +9,15 @@ body {
 
 nav {
   background-color: #20232a;
-  padding: 10px;
   border-radius: 5px;
 
   ul {
     list-style-type: none;
     padding: 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   
     li {
-      display: inline;
-      margin-right: 20px;
     
       a {
         color: rgb(226, 218, 218);

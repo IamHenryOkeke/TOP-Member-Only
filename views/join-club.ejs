@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Club</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <main>
+    <%- include('navbar') %>
+    <div class="container md:w-3/5 mx-auto  mt-10">
+      <form action="/join-club" method="post" id="form" class="w-full mx-auto">
+          <h2 class="text-2xl font-semibold">Enter Secret Code</h2>
+          <div class="input-group">
+              <label for="secretCode">Secret Code</label>
+              <input type="password" value="<%= (locals.data && locals.data.secretCode) ? locals.data.secretCode : '' %>" name="secretCode" id="secretCode" placeholder="Enter Secret Code" required>
+          </div>
+          <button type="submit">Join Club</button>
+      </form>
+      <%- include('errors') %>
+  </div>
+  </main>
+</body>
+</html>

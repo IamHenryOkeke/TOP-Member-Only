@@ -19,7 +19,23 @@ async function getUserByEmail(email) {
   return rows[0];
 }
 
+async function addUserToClub(values) {
+  try {
+    const query = `
+      UPDATE users
+      SET membership_status = 'premium'
+      WHERE id = $1;
+    `;
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error inserting new user:", error.message);
+    throw new Error("Database error: Unable to add user");
+  }
+}
+
 module.exports = {
   addNewUser,
-  getUserByEmail
+  getUserByEmail,
+  addUserToClub
 };

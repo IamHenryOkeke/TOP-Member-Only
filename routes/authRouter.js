@@ -12,7 +12,7 @@ authRouter.get("/login", (req, res) =>  res.render("login"));
 authRouter.post("/login", 
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/"
+    failureRedirect: "/auth/login"
   })
 );
 

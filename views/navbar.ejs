@@ -1,7 +1,12 @@
-<nav>
+<nav class="px-10 py-5">
   <ul>
     <li><a href="/">Home</a></li>
-    <li><a href="/auth/sign-up">Sign Up</a></li>
-    <li><a href="/auth/login">Log In</a></li>
+    <% if (!locals.user) {%>
+      <li><a href="/auth/sign-up">Sign Up</a></li>
+      <li><a href="/auth/login">Log In</a></li>
+    <% } else { %>
+      <li><a href="/join-club">Join Club</a></li>
+      <li><a href="/auth/logout">Log Out</a></li>
+    <% } %>
   </ul>
 </nav>

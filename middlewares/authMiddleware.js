@@ -1,11 +1,17 @@
 module.exports.isAuth = (req, res, next) => {
-    // Check if the user is authenticated
     if (req.isAuthenticated()) {
-        console.log("User is authenticated");
-        // User is authenticated, proceed to the next middleware or route handler
-      next();
+        // If authenticated and trying to access auth routes, redirect to home
+        if ((req.url.includes('login') || req.url.includes('sign-up')) && !req.url.includes('logout')) {
+            res.redirect('/');
+        } else {
+            // If authenticated and accessing other routes, proceed
+            next();
+        }
     } else {
-        // User is not authenticated, redirect to the login page
-        res.redirect('/auth/login');
+        if (req.url.includes('login') || req.url.includes('sign-up')) {
+            next();
+        }else {
+            res.redirect('/auth/login');
+        }
     }
-}
+};
