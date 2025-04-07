@@ -15,3 +15,19 @@ module.exports.isAuth = (req, res, next) => {
         }
     }
 };
+
+module.exports.isMember = (req, res, next) => {
+    if (req.user.membership_status !== 'regular') {
+        next();
+    } else {
+        res.redirect('/');
+    }
+};
+
+module.exports.isAdmin = (req, res, next) => {
+    if (req.user.membership_status === 'admin') {
+        next();
+    } else {
+        res.redirect('/');
+    }
+};

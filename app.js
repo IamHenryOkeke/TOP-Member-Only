@@ -8,7 +8,8 @@ const { pool } = require('./db/pool');
 const indexRouter = require("./routes/indexRouter");
 const authRouter = require("./routes/authRouter");
 const { isAuth } = require('./middlewares/authMiddleware');
-const joinClubRouter = require('./routes/joinClubRouter');
+const messageRouter = require('./routes/messageRouter');
+const memberRouter = require('./routes/memberRouter');
 
 
 require('./config/passport');
@@ -54,7 +55,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 app.use("/auth", isAuth, authRouter);
-app.use("/join-club", isAuth, joinClubRouter);
+app.use("/member", isAuth, memberRouter);
+app.use("/message", isAuth, messageRouter);
 app.use("/", indexRouter);
 
 

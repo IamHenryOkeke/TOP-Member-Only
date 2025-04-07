@@ -10,7 +10,32 @@
 <body>
   <main>
     <%- include('navbar') %>
-    <h3 class="mt-5 text-xl">Welcome to my message board</h3>
+    <h3 class="mt-5 text-xl">Welcome to my exclusive message club</h3>
+    <% if (locals.user) { %>
+      <p class="my-2 text-lg"><a href="/member/join-club" class="text-blue-300 hover:underline">Join club</a> to view message authors and dates</p>
+      <a href="/message/post" class="text-blue-300 hover:underline">Create a new message</a>
+    <% } %>
+    <div class="space-y-5 mt-5">
+      <h2 class="text-xl font-semibold">All Messages</h2>
+      <div class="grid md:grid-cols-2 gap-4 mt-5">
+        <% messages.forEach(({ id, title, content, userfirstname, userlastname, created_at, user_id }) => { %>
+          <div class="bg-[#20232a] p-4 rounded-md">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold"><%= title %></h3>
+              <% if (locals.user && (locals.user?.membership_status === 'admin')) { %>
+                <form action="/message/<%= id %>/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                  <button class="bg-[#007bff] rounded-lg px-4 py-1" type="submit">Delete</button>
+                </form> 
+              <% } %>
+            </div>
+            <p class="mt-2"><%= content %></p>
+            <% const isAuthorized = locals.user && (locals.user?.membership_status !== 'regular' || locals.user?.id === user_id); %>
+            <p class="mt-2 text-sm text-gray-400">Author: <%= isAuthorized ? `${userfirstname} ${userlastname}` : '*********' %></p>
+            <p class="mt-2 text-sm text-gray-400">Date: <%= isAuthorized ? created_at.toString().slice(0, 24) : "********" %></p>
+          </div>
+        <% }) %>        
+      </div>
+    </div>
   </main>
 </body>
 </html>
