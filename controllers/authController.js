@@ -2,6 +2,7 @@ const { body, validationResult } = require("express-validator");
 const { addNewUser, getUserByEmail } = require("../db/queries");
 const passwordUtils = require("../utils/passwordUtils");
 const asyncHandler = require("express-async-handler");
+const passport = require("passport");
 
 const validateUserSignUp = [
   body("firstName").trim()
@@ -58,7 +59,22 @@ const userSignUp = [
   })
 ] 
 
+const userLogin = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/auth/login"
+})
+
+const userLogout = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/auth/login");
+  });
+}
 
 module.exports = {
-  userSignUp
+  userSignUp,
+  userLogout,
+  userLogin
 }

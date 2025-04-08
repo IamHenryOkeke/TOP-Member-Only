@@ -87,8 +87,8 @@ async function getAllMessages() {
     const result = await pool.query(query);
     return result.rows;
   } catch (error) {
-    console.error("Error inserting new message:", error.message);
-    throw new Error("Database error: Unable to add message");
+    console.error("Error fetching new message:", error.message);
+    throw new Error("Database error: Unable to fetch message");
   }
 }
 
