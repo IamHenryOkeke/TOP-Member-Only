@@ -28,15 +28,12 @@ const sessionStore = new pgSession({
 
 app.use(expressSession({
   store: sessionStore,
-  saveUninitialized: true,
+  saveUninitialized: false,
   secret: process.env.SECRET || "my-secret-token",
   resave: false,
   name: "user-session",
   cookie: { 
-    maxAge: 10 * 60 * 1000, // expires in one hours in milliseconds
-    httpOnly: true, 
-    secure: process.env.NODE_ENV === "production", 
-    sameSite: "strict"
+    maxAge: 15 * 60 * 1000
   } 
 }));
 
@@ -45,6 +42,9 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
   if (req.user) res.locals.user = req.user;
+
+  console.log(req.user)
+  console.log(res.locals.user)
   next();
 });
 
